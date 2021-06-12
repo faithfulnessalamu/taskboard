@@ -17,7 +17,7 @@ var rootCmd = &cobra.Command{
 	Use:     "taskboard [command]",
 	Short:   "📑 Tasks for the command line",
 	Version: version,
-	Run:     rootCommand,
+	Run:     defaultCommand,
 }
 
 func init() {

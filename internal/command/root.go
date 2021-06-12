@@ -4,5 +4,5 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func rootCommand(cmd *cobra.Command, args []string) {
+func defaultCommand(cmd *cobra.Command, args []string) {
 }
