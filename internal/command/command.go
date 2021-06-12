@@ -6,6 +6,11 @@ var version = "debug"
 
 var commands = []*cobra.Command{
 	NewAddCommand(),
+	NewTimelineCommand(),
+	NewDeleteCommand(),
+	NewCheckCommand(),
+	NewEditCommand(),
+	NewSearchCommand(),
 }
 
 var rootCmd = &cobra.Command{
