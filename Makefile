@@ -1,6 +1,8 @@
-EXE_DIR := cmd/taskboard
-BINARY_NAME := taskboard
+VERSION != git describe --tags --always
+OS != uname -s
+ARCH != uname -i
+VERSION_VAR_PATH = github.com/thealamu/taskboard/internal/command
 
 .PHONY: build
 build:
-	go build -o $(BINARY_NAME) $(EXE_DIR)/main.go
+	go build -o taskboard --ldflags="-X $(VERSION_VAR_PATH).version=$(VERSION)-$(OS)-$(ARCH)" cmd/taskboard/main.go
