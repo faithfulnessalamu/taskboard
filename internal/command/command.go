@@ -3,7 +3,7 @@ package command
 import "github.com/spf13/cobra"
 
 var rootCmd = &cobra.Command{
-	Use:   "taskboard",
+	Use:   "taskboard [command]",
 	Short: "📑 Tasks for the command line",
 }
 
