@@ -1,2 +1,2 @@
 # taskboard
-Taskboard but in Go
+📑 Tasks for the command line
