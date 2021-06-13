@@ -1,14 +1,26 @@
-package data
+package sql
 
 import (
 	"testing"
 	"time"
 
+	"github.com/thealamu/taskboard/internal/data"
 	"github.com/thealamu/taskboard/internal/entity"
 )
 
+func TestSQLStore(t *testing.T) {
+	// use test dsn
+	_DSN = "file:taskboard-test.db?cache=shared&mode=memory"
+
+	store, err := NewStore()
+	if err != nil {
+		t.Errorf("could not create new store, got %v", err)
+	}
+	DoStoreImplementationTest(t, store)
+}
+
 // Test a Store implementation
-func DoStoreImplementationTest(t *testing.T, s Store) {
+func DoStoreImplementationTest(t *testing.T, s data.Store) {
 	// Add Tasks
 	for _, testTask := range testTasks {
 		err := s.AddTask(testTask)
