@@ -23,7 +23,7 @@ func rootCmd(view *ui.UI, db data.Store) *cobra.Command {
 		NewCheckCommand(view, db),
 		NewDeleteCommand(view, db),
 		NewEditCommand(),
-		NewSearchCommand(),
+		NewSearchCommand(view, db),
 		NewTimelineCommand(),
 	}
 
