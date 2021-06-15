@@ -20,11 +20,11 @@ func rootCmd(view *ui.UI, db data.Store) *cobra.Command {
 
 	subCommands := []*cobra.Command{
 		NewAddCommand(view, db),
-		NewTimelineCommand(),
+		NewCheckCommand(view, db),
 		NewDeleteCommand(),
-		NewCheckCommand(),
 		NewEditCommand(),
 		NewSearchCommand(),
+		NewTimelineCommand(),
 	}
 
 	rootCmd.AddCommand(subCommands...)
