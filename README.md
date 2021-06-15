@@ -21,4 +21,23 @@ Verify installation
 $ taskboard --version
 ```
 
+## Usage
+Add a task:
+```shell
+$ taskboard add "TODO 1"
+```
 
+See your tasks:
+```shell
+$ taskboard
+```
+
+Search for a task:
+```shell
+$ taskboard search "Todo"
+```
+
+See all taskboard commands:
+```shell
+$ taskboard --help
+```
