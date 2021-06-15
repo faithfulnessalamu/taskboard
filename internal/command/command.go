@@ -10,15 +10,15 @@ var version = "debug"
 
 type commandFunc = func(cmd *cobra.Command, args []string)
 
-var rootCmd = &cobra.Command{
-	Use:     "taskboard [command]",
-	Short:   "📑 Tasks for the command line",
-	Version: version,
-	Run:     defaultCommand,
-}
+func rootCmd(view *ui.UI, db data.Store) *cobra.Command {
+	rootCmd := &cobra.Command{
+		Use:     "taskboard [command]",
+		Short:   "📑 Tasks for the command line",
+		Version: version,
+		Run:     defaultCommand(view, db),
+	}
 
-func getSubCommands(view *ui.UI, db data.Store) []*cobra.Command {
-	return []*cobra.Command{
+	subCommands := []*cobra.Command{
 		NewAddCommand(view, db),
 		NewTimelineCommand(),
 		NewDeleteCommand(),
@@ -26,10 +26,11 @@ func getSubCommands(view *ui.UI, db data.Store) []*cobra.Command {
 		NewEditCommand(),
 		NewSearchCommand(),
 	}
+
+	rootCmd.AddCommand(subCommands...)
+	return rootCmd
 }
 
 func Execute(view *ui.UI, db data.Store) error {
-	commands := getSubCommands(view, db)
-	rootCmd.AddCommand(commands...)
-	return rootCmd.Execute()
+	return rootCmd(view, db).Execute()
 }
