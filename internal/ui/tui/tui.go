@@ -120,7 +120,7 @@ var templateString = `
 {{ end }}
 {{ range .TaskList }} {{tStyleTask .}}
 {{ end }}
-{{ with .Remark }} {{tStyleRemark . }} {{ end }}
+{{ with .Remark }} {{ if .Msg }} {{tStyleRemark . }} {{ end }} {{ end }}
 {{ if .HasFooter }}
 {{ footerSynopsis .TaskList}}
 {{ end }}
