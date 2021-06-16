@@ -2,6 +2,7 @@ package sql
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -40,6 +41,24 @@ func (s *SQLStore) GetTasks(all bool) ([]entity.Task, error) {
 	}
 	defer rows.Close()
 	return readTasksFromRows(rows)
+}
+
+func (s *SQLStore) GetLastID() (int, error) {
+	qry := `SELECT * FROM tasks ORDER BY date DESC LIMIT 1`
+	rows, err := s.db.Query(qry)
+	if err != nil {
+		return -1, err
+	}
+	defer rows.Close()
+
+	t, err := readTasksFromRows(rows)
+	if err != nil {
+		return -1, err
+	}
+	if len(t) < 1 {
+		return -1, fmt.Errorf("can't obtain last task id")
+	}
+	return t[0].ID, nil
 }
 
 func (s *SQLStore) DeleteTask(id int) error {

@@ -31,11 +31,20 @@ func addCommand(view *ui.UI, db data.Store) commandFunc {
 
 	return func(cmd *cobra.Command, args []string) {
 		task := entity.Task{Description: args[0], Date: time.Now()}
-		err := db.AddTask(task)
+		// get next task id
+		lastTaskID, err := db.GetLastID()
 		if err != nil {
 			fail(task, err.Error())
 			return
 		}
+		task.ID = lastTaskID + 1
+
+		err = db.AddTask(task)
+		if err != nil {
+			fail(task, err.Error())
+			return
+		}
+
 		success(task, "Created task")
 	}
 }

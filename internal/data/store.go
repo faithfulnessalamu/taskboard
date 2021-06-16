@@ -18,4 +18,6 @@ type Store interface {
 	// FindTasks returns tasks with the filter in their description.
 	// If all is true, completed tasks are searched too.
 	FindTasks(filter string, all bool) ([]entity.Task, error)
+
+	GetLastID() (int, error)
 }
