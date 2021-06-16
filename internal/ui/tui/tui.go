@@ -116,12 +116,18 @@ func underline(s string) string {
 var templateString = `
 
 {{ if .HasHeader }}
+{{ if .TaskList }}
 {{underline "My Board"}}  {{headerSynopsis .TaskList}}
+{{ else }}
+You have no tasks. 'taskboard --help' to get started.
+{{ end }}
 {{ end }}
 {{ range .TaskList }} {{tStyleTask .}}
 {{ end }}
 {{ with .Remark }} {{ if .Msg }} {{tStyleRemark . }} {{ end }} {{ end }}
-{{ if .HasFooter }}
+{{ if .HasFooter }} 
+{{ if .TaskList }}
 {{ footerSynopsis .TaskList}}
+{{ end }}
 {{ end }}
 `
