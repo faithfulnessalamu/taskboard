@@ -1,11 +1,9 @@
 package tui
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"strconv"
-	"strings"
 	"text/template"
 	"time"
 
@@ -36,10 +34,8 @@ func (t *TUI) Render(data ui.Template) {
 	if err != nil {
 		fmt.Fprintln(t.out, err)
 	}
-	var buf bytes.Buffer
-	tuiTemplate.Execute(&buf, data)
-	res := strings.TrimSpace(buf.String())
-	fmt.Fprintln(t.out, res)
+
+	tuiTemplate.Execute(t.out, data)
 }
 
 // tStyleRemark styles a remark
@@ -114,20 +110,27 @@ func underline(s string) string {
 }
 
 var templateString = `
+{{- if .HasHeader -}}
+	{{- if .TaskList -}}
+		{{ underline "My Board"}}  {{headerSynopsis .TaskList}}
+	{{- else -}}
+		You have no tasks. 'taskboard --help' to get started.
+	{{- end -}}
+{{- end -}}
 
-{{ if .HasHeader }}
-{{ if .TaskList }}
-{{underline "My Board"}}  {{headerSynopsis .TaskList}}
-{{ else }}
-You have no tasks. 'taskboard --help' to get started.
-{{ end }}
-{{ end }}
-{{ range .TaskList }} {{tStyleTask .}}
-{{ end }}
-{{ with .Remark }} {{ if .Msg }} {{tStyleRemark . }} {{ end }} {{ end }}
-{{ if .HasFooter }} 
-{{ if .TaskList }}
-{{ footerSynopsis .TaskList}}
-{{ end }}
-{{ end }}
+{{- range .TaskList }}
+  {{ tStyleTask . }}
+{{- end -}}
+
+{{- with .Remark -}} 
+	{{- if .Msg -}} 
+{{ tStyleRemark . }} 
+	{{- end -}} 
+{{- end -}}
+
+{{- if .HasFooter -}} 
+	{{- if .TaskList }}
+{{ footerSynopsis .TaskList }}
+	{{- end -}}
+{{- end }}
 `
