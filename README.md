@@ -41,3 +41,6 @@ See all taskboard commands:
 ```shell
 $ taskboard --help
 ```
+
+## Inspiration
+This project was inspired by [Taskbook](https://github.com/klaussinani/taskbook).
