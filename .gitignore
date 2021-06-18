@@ -4,7 +4,6 @@
 *.dll
 *.so
 *.dylib
-taskboard
 
 # Test binary, built with `go test -c`
 *.test
@@ -14,3 +13,4 @@ taskboard
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+dist/
