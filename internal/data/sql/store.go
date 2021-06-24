@@ -66,9 +66,11 @@ func (s *SQLStore) GetLastID() (int, error) {
 	if err != nil {
 		return -1, err
 	}
+
 	if len(t) < 1 {
-		return -1, fmt.Errorf("can't obtain last task id")
+		return 0, nil
 	}
+
 	return t[0].ID, nil
 }
 
