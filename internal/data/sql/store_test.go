@@ -10,9 +10,9 @@ import (
 
 func TestSQLStore(t *testing.T) {
 	// use test dsn
-	_DSN = "file:taskboard-test.db?cache=shared&mode=memory"
+	DSN := "file:taskboard-test.db?cache=shared&mode=memory"
 
-	store, err := NewStore()
+	store, err := newStore(DSN)
 	if err != nil {
 		t.Errorf("could not create new store, got %v", err)
 	}

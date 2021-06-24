@@ -15,7 +15,18 @@ type SQLStore struct {
 }
 
 func NewStore() (*SQLStore, error) {
-	db, err := newSqliteDB()
+	// Build DSN
+	dbPath, err := getDBPath()
+	if err != nil {
+		return nil, err
+	}
+
+	DSN := fmt.Sprintf(`file:%s/taskboard.db`, dbPath)
+	return newStore(DSN)
+}
+
+func newStore(DSN string) (*SQLStore, error) {
+	db, err := newSqliteDB(DSN)
 	if err != nil {
 		return nil, err
 	}
@@ -120,10 +131,8 @@ func readTasksFromRows(rows *sql.Rows) ([]entity.Task, error) {
 	return tasks, nil
 }
 
-var _DSN = `file:taskboard.db`
-
-func newSqliteDB() (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", _DSN)
+func newSqliteDB(DSN string) (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", DSN)
 	if err != nil {
 		return nil, err
 	}
